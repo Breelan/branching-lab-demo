@@ -14,26 +14,39 @@ import java.net.Socket;
 
 public class Client {
 
-  public static void main(String[] args) {
+	public static void main(String[] args) {
 
-    try {
-      // Connect to a Server and get the two streams from the server
-      Socket server = new Socket("localhost", 4000);
+		try {
+			// Connect to a Server and get the two streams from the server
+			Socket server = new Socket("localhost", 4000);
 
-      // Do some IO with the server
-      ObjectOutputStream output = new ObjectOutputStream(server.getOutputStream());
-      ObjectInputStream input = new ObjectInputStream(server.getInputStream());
+			// Do some IO with the server
+			ObjectOutputStream output = new ObjectOutputStream(server.getOutputStream());
+			ObjectInputStream input = new ObjectInputStream(server.getInputStream());
 
-      
-      // TODO: Add a loop that writes "Hello Server" to the Server
-      // and then read from the server until the Server writes back Goodbye. 
-      // Print whatever the Server writes, including the terminating String.
+			// TODO: Add a loop that writes "Hello Server" to the Server
+			// and then read from the server until the Server writes back
+			// Goodbye.
+			// Print whatever the Server writes, including the terminating
+			// String.
+			while (true) {
+				String str = "Hello Server";
+				if (input.equals("Goodbye"))
+					break;
+				else
+					output.writeObject(str);
+				try {
+					System.out.println(input.readObject());
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
-      
-      // Close the connection to the server
-      server.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+			// Close the connection to the server
+			server.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
