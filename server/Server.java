@@ -29,6 +29,19 @@ public class Server {
       // write backs "Hello Client".  Write back Goodbye to terminate
       // both the client and server.  Print whatever the Client writes.
       
+	int iteration = 0;
+	while (true) {
+
+		String input = (String) input.read();
+		System.out.println(input);
+
+		if(iteration == 4) {
+			output.write("Goodbye");
+			break;
+		}
+		
+		iteration++;
+	}
       
       // Close the connection
       connection.close();
